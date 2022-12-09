@@ -1,5 +1,6 @@
 import 'package:clusters/models/notemodel.dart';
 import 'package:clusters/provider/notes_provider.dart';
+import 'package:clusters/screens/notes/viewNote.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -90,9 +91,11 @@ class NotesState extends State<Notes> {
                   size: const Size(250,250),
                   child: GestureDetector(
                     onDoubleTap: (){
-                       Navigator.push(
-                         context, MaterialPageRoute(builder: (_) => AddNote(phone:widget.phone ,update:true,NoteForUpdate: currentnote,)));
-
+                      Navigator.push(
+                          context, MaterialPageRoute(builder: (_) => ViewNote(note: currentnote,)));
+                    },
+                    onLongPress: (){Navigator.push(
+                        context, MaterialPageRoute(builder: (_) => AddNote(phone:widget.phone ,update:true,NoteForUpdate: currentnote,)));
                     },
                     child: Container(
 
