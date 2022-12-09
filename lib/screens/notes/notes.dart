@@ -1,4 +1,3 @@
-import 'package:clusters/common/common_helper.dart';
 import 'package:clusters/models/notemodel.dart';
 import 'package:clusters/provider/notes_provider.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +90,9 @@ class NotesState extends State<Notes> {
                   size: const Size(250,250),
                   child: GestureDetector(
                     onDoubleTap: (){
-                      alertDialog(context, 'hello') ;
+                       Navigator.push(
+                         context, MaterialPageRoute(builder: (_) => AddNote(phone:widget.phone ,update:true,NoteForUpdate: currentnote,)));
+
                     },
                     child: Container(
 

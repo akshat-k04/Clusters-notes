@@ -7,7 +7,9 @@ import 'package:uuid/uuid.dart';
 class AddNote extends StatefulWidget {
   final phone;
   final update;
-  const AddNote({super.key, required this.phone, required this.update});
+  Notemodel? NoteForUpdate ;
+
+  AddNote({super.key, required this.phone, required this.update , this.NoteForUpdate});
 
   @override
   State<StatefulWidget> createState() {
@@ -21,6 +23,15 @@ class AddNoteState extends State<AddNote> {
 
   FocusNode nodeFocus = FocusNode();
 
+  @override
+  void initState() {
+
+    super.initState();
+    if(widget.update){
+      titlecont.text = widget.NoteForUpdate!.titlef! ;
+      contentcont.text = widget.NoteForUpdate!.contentf! ;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,10 +176,13 @@ class AddNoteState extends State<AddNote> {
 
    void operate (){
     if(widget.update){
-      //TODO :- update code write here
+      widget.NoteForUpdate!.titlef = titlecont.text ;
+      widget.NoteForUpdate!.contentf = contentcont.text ;
+      Provider.of<NotesProvider>(context,listen: false).updateNote(widget.NoteForUpdate!) ;
+
     }
     else{
-      //TODO :- add code write here
+
       Notemodel modelToAdd = Notemodel(
         idf: const Uuid().v1() ,
         titlef: titlecont.text ,
