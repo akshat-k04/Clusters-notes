@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "401073721367",
+    "firebase_url": "https://clusters-bf967-default-rtdb.firebaseio.com",
+    "project_id": "clusters-bf967",
+    "storage_bucket": "clusters-bf967.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401073721367:android:5d244d4413ff1a5ec7cc52",
+        "android_client_info": {
+          "package_name": "com.example.clusters"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "401073721367-l51flqe9qk493t3icemb3p4nitmi1qro.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCw-kjpbI_GQAIqkcMq_Gu00uepqivz6Ig"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "401073721367-l51flqe9qk493t3icemb3p4nitmi1qro.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
