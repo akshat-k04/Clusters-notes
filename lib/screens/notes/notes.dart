@@ -19,19 +19,18 @@ class Notes extends StatefulWidget {
 
 class NotesState extends State<Notes> {
     bool? isUpdate ;
+    String searchquery ="" ;
   @override
 
     Widget build(BuildContext context) {
     NotesProvider provideNotesToUs = Provider.of<NotesProvider>(context) ;
     return Scaffold(
 
-
         appBar: AppBar(
           systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: Colors.white,
             statusBarIconBrightness: Brightness.dark,
           ),
-
 
 
           backgroundColor: Colors.white,
@@ -48,6 +47,7 @@ class NotesState extends State<Notes> {
 
 
           automaticallyImplyLeading: false,
+
         ),
 
 
@@ -66,74 +66,125 @@ class NotesState extends State<Notes> {
           onRefresh: () async {
             await ApiServices.fetchnotes(widget.phone) ;
             },
-          child: SafeArea(
-              child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-                  itemCount: provideNotesToUs.notes.length,
-                  itemBuilder: (context,index){
-                    Notemodel currentnote = provideNotesToUs.notes[index] ;
-                    return Dismissible(
-                      key: ValueKey(currentnote.idf.toString()),
-                      direction: DismissDirection.horizontal,
+          child:  SafeArea(
+                child: (provideNotesToUs.notes.length>0)?ListView(
 
-                      confirmDismiss: (direction){
-                        return showDialog(context: context,
-                            builder: (context)=>AlertDialog(
-                              title: const Text('please confirm'),
-                              content: const Text('are you sure ?'),
-                              actions: [
-                                TextButton(onPressed: (){Navigator.of(context).pop(true);}, child:const Text(style: TextStyle(color: Colors.black),'yes,delete it!'),),
-                                TextButton(onPressed: (){Navigator.of(context).pop(false);}, child: const Text(style: TextStyle(color: Colors.black),'No ,go back!')) ,
-                              ],
-                            )
-                        );
-                      },
-                      onDismissed: (DismissDirection direction){
-                        provideNotesToUs.deleteNote(currentnote) ;
+                    children:[
 
-
-                      },
-                      child: SizedBox.fromSize(
-                        size: const Size(250,250),
-                        child: GestureDetector(
-                          onDoubleTap: (){
-                            Navigator.push(
-                                context, MaterialPageRoute(builder: (_) => ViewNote(note: currentnote,)));
+                      Padding(
+                          padding:const EdgeInsets.all(8.0),
+                        child:TextField(
+                          onChanged: (val){
+                            setState(() {
+                              searchquery= val ;
+                            });
                           },
-                          onLongPress: (){Navigator.push(
-                              context, MaterialPageRoute(builder: (_) => AddNote(phone:widget.phone ,update:true,NoteForUpdate: currentnote,)));
-                          },
-                          child: Container(
+                          decoration: const InputDecoration(
+                            isDense: true,                      // Added this
+                            contentPadding: EdgeInsets.all(16),
+                              hintText: 'search',
+                            focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(50.0),
+                                ),
+                                borderSide: BorderSide(
 
-                            margin: const EdgeInsets.all(5),
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color:const Color.fromARGB(120, 196, 177, 222),
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                  color:  const Color(0xFFFFFFFF),
-                                  width: 2 ,
-
+                                  color: Colors.black,
                                 )
-                            ) ,
-                            child: SingleChildScrollView(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(currentnote.titlef!,
-                                    style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20 ),),
-                                  const SizedBox(height: 7,),
-                                  Text(currentnote.contentf!,
-                                    style:  TextStyle(fontSize: 15 , color: Colors.grey[700]),)
+                            ),
+                            border:    OutlineInputBorder(
+
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(50.0),
+                              ),
+
+                            ),
+                            hintStyle: TextStyle(
+                              color: Colors.black38,
+                            ),
+
+                          ),
+
+
+                        ),
+                      ),
+
+                GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+                    itemCount: provideNotesToUs.filteredNotes(searchquery).length,
+                    itemBuilder: (context,index){
+                      Notemodel currentnote = provideNotesToUs.filteredNotes(searchquery)[index] ;
+                      return Dismissible(
+                        key: ValueKey(currentnote.idf.toString()),
+                        direction: DismissDirection.horizontal,
+
+                        confirmDismiss: (direction){
+                          return showDialog(context: context,
+                              builder: (context)=>AlertDialog(
+                                title: const Text('please confirm'),
+                                content: const Text('are you sure ?'),
+                                actions: [
+                                  TextButton(onPressed: (){Navigator.of(context).pop(true);}, child:const Text(style: TextStyle(color: Colors.black),'yes,delete it!'),),
+                                  TextButton(onPressed: (){Navigator.of(context).pop(false);}, child: const Text(style: TextStyle(color: Colors.black),'No ,go back!')) ,
                                 ],
+                              )
+                          );
+                        },
+                        onDismissed: (DismissDirection direction){
+                          provideNotesToUs.deleteNote(currentnote) ;
+
+
+                        },
+                        child: SizedBox.fromSize(
+                          size: const Size(250,250),
+                          child: GestureDetector(
+                            onDoubleTap: (){
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: (_) => ViewNote(note: currentnote,)));
+                            },
+                            onLongPress: (){Navigator.push(
+                                context, MaterialPageRoute(builder: (_) => AddNote(phone:widget.phone ,update:true,NoteForUpdate: currentnote,)));
+                            },
+                            child: Container(
+
+                              margin: const EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                  color:const Color.fromARGB(120, 196, 177, 222),
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                    color:  const Color(0xFFFFFFFF),
+                                    width: 2 ,
+
+                                  )
+                              ) ,
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(currentnote.titlef!,
+                                      style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 20 ),),
+                                    const SizedBox(height: 7,),
+                                    Text(currentnote.contentf!,
+                                      style:  TextStyle(fontSize: 15 , color: Colors.grey[700]),)
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  }
-              )
+                      );
+                    }
+                )]): const Center(
+                  child: Text('add notes',
+                    style: TextStyle(fontSize: 20,fontFamily: 'Schyler' ),
+
+                ),
+
+            ),
+
           ),
         ): const Center(
           child:CircularProgressIndicator(backgroundColor: Colors.black,color: Colors.white,strokeWidth: 4,),
