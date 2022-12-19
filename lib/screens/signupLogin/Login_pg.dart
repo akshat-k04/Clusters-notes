@@ -3,8 +3,10 @@ import 'package:clusters/screens/signupLogin/signup_page.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import '../../common/common_helper.dart';
 import '../../common/text input.dart';
+import '../../provider/notes_provider.dart';
 import '../After_login/home screen.dart';
 
 class LoginPg extends StatefulWidget {
@@ -48,6 +50,7 @@ class LoginScreen extends State<LoginPg> {
         final Object? dbPassword = event.snapshot.value;
 
         if (dbPassword == upassword) {
+
           alertDialog(context, 'login successfully');
           Navigator.pushAndRemoveUntil(
               context,
@@ -66,7 +69,8 @@ class LoginScreen extends State<LoginPg> {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
+    return
+      AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
           statusBarColor: Colors.white,
           systemNavigationBarColor: Colors.white,
@@ -164,6 +168,7 @@ class LoginScreen extends State<LoginPg> {
           ),
         ),
       ),
+
     );
   }
 }

@@ -20,12 +20,13 @@ class FirstPg extends StatelessWidget{
   Widget build(BuildContext context) {
 
     return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(
-            create: (context) => NotesProvider(),
-          )
-        ],
-      child: MaterialApp(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => NotesProvider(),
+        )
+      ],
+      child:
+      MaterialApp(
           debugShowCheckedModeBanner: false,
           home: FutureBuilder(
             future: _fbApp,

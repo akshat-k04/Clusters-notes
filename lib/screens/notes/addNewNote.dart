@@ -178,6 +178,7 @@ class AddNoteState extends State<AddNote> {
     if(widget.update){
       widget.NoteForUpdate!.titlef = titlecont.text ;
       widget.NoteForUpdate!.contentf = contentcont.text ;
+      widget.NoteForUpdate!.dateAddedf = DateTime.now();
       Provider.of<NotesProvider>(context,listen: false).updateNote(widget.NoteForUpdate!) ;
 
     }
