@@ -44,7 +44,7 @@ class NotesProvider with ChangeNotifier{
 
 
   List<Notemodel> filteredNotes(String query){
-    return notes.where((element) => element.titlef!.toLowerCase().contains(query.toLowerCase())).toList();
+    return notes.where((element) => element.titlef!.toLowerCase().contains(query.toLowerCase())||element.contentf!.toLowerCase().contains(query.toLowerCase())).toList();
   }
 
 }

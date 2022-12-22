@@ -1,5 +1,6 @@
 import 'package:clusters/provider/notes_provider.dart';
 import 'package:clusters/screens/signupLogin/Login_pg.dart';
+import 'package:clusters/screens/signupLogin/splashScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -38,7 +39,7 @@ class FirstPg extends StatelessWidget{
                 return const Text('something wents wrong');
               }
               else if (snapshot.hasData){
-                return const LoginPg() ;
+                return const Splash() ;
               }
               else {
                 return const Text('something wents wrong');

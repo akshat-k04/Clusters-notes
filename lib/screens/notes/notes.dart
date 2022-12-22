@@ -109,7 +109,7 @@ class NotesState extends State<Notes> {
                         ),
                       ),
 
-                GridView.builder(
+                      (provideNotesToUs.filteredNotes(searchquery).length>0)?GridView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
@@ -177,7 +177,10 @@ class NotesState extends State<Notes> {
                         ),
                       );
                     }
-                )]): const Center(
+                ): const Center(
+                        child: Text('No NoTeS fOuNd'),
+                      )
+                    ]): const Center(
                   child: Text('add notes',
                     style: TextStyle(fontSize: 20,fontFamily: 'Schyler' ),
 

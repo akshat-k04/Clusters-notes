@@ -3,11 +3,10 @@ import 'package:clusters/screens/signupLogin/signup_page.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import '../../common/common_helper.dart';
 import '../../common/text input.dart';
-import '../../provider/notes_provider.dart';
 import '../After_login/home screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPg extends StatefulWidget {
   const LoginPg({super.key});
@@ -24,21 +23,28 @@ class LoginScreen extends State<LoginPg> {
   final DatabaseReference _database = FirebaseDatabase.instance.ref();
   final _formKey = GlobalKey<FormState>();
   bool isLoading = false ;
+  // bool isLoggedIn = false ;
+  // bool autoLoggedIn = false ;
+
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+  }
 
 
 
 
-
-
-
+  void autoLoggedINFunc ()async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    sp.setString('username', _phone.text);
+  }
 
 
   void process() {
-
-
-
-
-
     String uphone = _phone.text;
     String upassword = _password.text;
 
@@ -50,7 +56,7 @@ class LoginScreen extends State<LoginPg> {
         final Object? dbPassword = event.snapshot.value;
 
         if (dbPassword == upassword) {
-
+          autoLoggedINFunc() ;
           alertDialog(context, 'login successfully');
           Navigator.pushAndRemoveUntil(
               context,
