@@ -50,6 +50,13 @@ dependencies:
   uuid: ^3.0.7
   http: ^0.13.5
   shared_preferences: ^2.0.15
+  flutter_state_notifier: ^0.7.1
+  scribble: ^0.9.1
+  gallery_saver: ^2.3.2
+  flutter_circle_color_picker: ^0.3.0
+  share_plus: ^6.3.0
+  qr_flutter: ^4.0.0
+  animations: ^2.0.7
 
 dev_dependencies:
   flutter_test:

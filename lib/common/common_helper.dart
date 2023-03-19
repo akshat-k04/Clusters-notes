@@ -27,18 +27,7 @@ validatePhone(String phone){
 }
 
 
-alertoption(BuildContext context , String title , String? contnt  ){
-  showDialog(context: context,
-      builder: (context)=>AlertDialog(
-        title: Text(title),
-          content: Text(contnt!),
-        actions: [
-          ElevatedButton(onPressed: (){Navigator.of(context).pop(true);}, child:const Text('go for it')),
-          ElevatedButton(onPressed: (){Navigator.of(context).pop(false);}, child: const Text('go back')) ,
-        ],
-      )
-  );
-}
+
 
 
 

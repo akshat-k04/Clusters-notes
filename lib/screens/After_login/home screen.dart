@@ -1,5 +1,5 @@
 import 'package:clusters/screens/After_login/profile_pg.dart';
-import 'package:clusters/screens/chat/all_chat.dart';
+import 'package:clusters/screens/drawing/drawYourDay.dart';
 import 'package:clusters/screens/notes/notes.dart';
 import 'package:clusters/screens/signupLogin/Login_pg.dart';
 import 'package:flutter/material.dart';
@@ -25,10 +25,13 @@ class Homeg extends State<HomePg> {
   int _selectedIndex = 0;
   Homeg({required this.phon});
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<NotesProvider>(context, listen: false).fetchnotes(phon);
+  }
   void gotoPages(int index) {
-    if (index == 1) {
-      Provider.of<NotesProvider>(context, listen: false).fetchnotes(phon);
-    }
     setState(() {
       _selectedIndex = index;
     });
@@ -107,7 +110,25 @@ class Homeg extends State<HomePg> {
             ),
           ),
           ListTile(
-            title: Text('Social'),
+            title: Text('About us'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+              // Then close the drawer
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: Text('Terms of service'),
+            onTap: () {
+              // Update the state of the app
+              // ...
+              // Then close the drawer
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: Text('life Hacks'),
             onTap: () {
               // Update the state of the app
               // ...
@@ -130,13 +151,17 @@ class Homeg extends State<HomePg> {
         ]),
         //backgroundColor: Colors.grey,
       ),
-      body: (_selectedIndex == 0) ? AllChat() : Notes(phone: phon),
+      body: (_selectedIndex == 0) ? null : (_selectedIndex==1)?Drawing() :Notes(phone: phon),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.messenger_rounded),
             label: 'chat',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.draw_rounded),
+            label: 'drawing',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.notes),
